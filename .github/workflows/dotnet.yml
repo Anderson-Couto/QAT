@@ -21,8 +21,11 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: cd src & dotnet restore
+      working-directory: src
+      run: dotnet restore
     - name: Build
-      run: cd src & dotnet build --no-restore
+      working-directory: src
+      run: dotnet build --no-restore
     - name: Test
-      run: cd src & dotnet test --no-build --verbosity normal
+      working-directory: src
+      run: dotnet test --no-build --verbosity normal
