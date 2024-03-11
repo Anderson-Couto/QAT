@@ -2,14 +2,14 @@
 QA &amp; Testes Automatizados em C#
 
 # Para restaurar pacotes nuget
-cd src
-dotnet restore
+- cd src
+- dotnet restore
 
 # Para build
-cd src
-dotnet build
+- cd src
+- dotnet build
 
 # Para realizar testes
-cd src
-dotnet test
+- cd src
+- dotnet test
 
