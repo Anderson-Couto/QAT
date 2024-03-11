@@ -1,0 +1,45 @@
+@model QAT.Core.Models.Frete
+
+@{
+    ViewData["Title"] = "Pedidos Page";
+}
+
+<h2>Novo Frete</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Origem)
+        @Html.EditorFor(model => model.Origem)
+        @Html.ValidationMessageFor(model => model.Origem)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Destino)
+        @Html.EditorFor(model => model.Destino)
+        @Html.ValidationMessageFor(model => model.Destino)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Pacote.ValorTotal)
+        @Html.EditorFor(model => model.Pacote.ValorTotal)
+        @Html.ValidationMessageFor(model => model.Pacote.ValorTotal)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Pacote.PesoTotal)
+        @Html.EditorFor(model => model.Pacote.PesoTotal)
+        @Html.ValidationMessageFor(model => model.Pacote.PesoTotal)
+    </div>
+
+    <button type="submit" onsubmit="event.preventDefault()" class="btn btn-primary">Salvar</button>
+}
+
+@if (ViewBag.TotalPedido > 0)
+{
+    <div class="total-pedido">
+        <p>O total do pedido é: R$ @Html.Raw(ViewBag.TotalPedido.ToString("N2"))</p>
+    </div>
+}
