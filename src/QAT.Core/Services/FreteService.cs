@@ -38,7 +38,7 @@ public class FreteService : IFreteService
             var custoDistanciaTempo = CalcularCustoDistanciaTempo(distanceMatrix);
 
             // Simulação de cálculo de custo de envio
-            var calculo = 3m + custoDistanciaTempo + (frete.Pacote.PesoTotal * 0.5m);
+            var calculo = 5m + custoDistanciaTempo + (frete.Pacote.PesoTotal * 0.5m);
 
             return Decimal.Round(calculo, 2);
         }
