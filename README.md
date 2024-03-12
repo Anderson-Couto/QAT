@@ -12,4 +12,3 @@ QA &amp; Testes Automatizados em C#
 # Para realizar testes
 - cd src
 - dotnet test
-
