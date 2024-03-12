@@ -26,7 +26,7 @@ namespace QAT.Tests
             _configurationTest = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.Test.json")
                 .Build();
-        } 
+        }
 
         [Test]
         public void CalcularCustoEnvio_FreteNulo_ThrowsArgumentNullException()
@@ -82,10 +82,9 @@ namespace QAT.Tests
                         }
                     }
             };
-            
-            var httpMessageHandlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
-            var mockHttpClient = new HttpClient(httpMessageHandlerMock.Object);
 
+            var httpMessageHandlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+            
             httpMessageHandlerMock
                     .Protected()
                     .Setup<Task<HttpResponseMessage>>(
@@ -98,15 +97,27 @@ namespace QAT.Tests
                     })
                     .Verifiable();
 
-            _mockHttpClientFactory.Setup(factory => factory.CreateClient(It.IsAny<string>()))
-                            .Returns(mockHttpClient);
+            var mockHttpClient = new HttpClient(httpMessageHandlerMock.Object);
+
+            _mockHttpClientFactory.Setup(
+                factory => factory.CreateClient(It.IsAny<string>())
+            ).Returns(mockHttpClient);
 
             var freteService = new FreteService(_mockHttpClientFactory.Object, _configurationTest);
             var origem = "Origem";
             var destino = "Destino";
             var pesoTotal = 10m;
-            var pacote = new Pacote { PesoTotal = pesoTotal };
-            var frete = new Frete { Origem = origem, Destino = destino, Pacote = pacote };
+            var valorTotal = 0m;
+
+            var frete = new Frete
+            {
+                Origem = origem,
+                Destino = destino,
+                Pacote = new Pacote { 
+                    PesoTotal = pesoTotal, 
+                    ValorTotal = valorTotal 
+                }
+            };
 
             // Act
             var result = await freteService.CalcularCustoEnvio(frete);
@@ -136,7 +147,7 @@ namespace QAT.Tests
                         }
                     }
             };
-            
+
             var httpMessageHandlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
             var mockHttpClient = new HttpClient(httpMessageHandlerMock.Object);
 
@@ -150,15 +161,25 @@ namespace QAT.Tests
                     })
                     .Verifiable();
 
-            _mockHttpClientFactory.Setup(factory => factory.CreateClient(It.IsAny<string>()))
-                            .Returns(mockHttpClient);
+            _mockHttpClientFactory.Setup(
+                factory => factory.CreateClient(It.IsAny<string>())
+            ).Returns(mockHttpClient);
 
             var freteService = new FreteService(_mockHttpClientFactory.Object, _configurationTest);
             var origem = "Origem";
             var destino = "Destino";
             var pesoTotal = 0m;
-            var pacote = new Pacote { PesoTotal = pesoTotal };
-            var frete = new Frete { Origem = origem, Destino = destino, Pacote = pacote };
+            var valorTotal = 0m;
+
+            var frete = new Frete
+            {
+                Origem = origem,
+                Destino = destino,
+                Pacote = new Pacote { 
+                    PesoTotal = pesoTotal, 
+                    ValorTotal = valorTotal 
+                }
+            };
 
             // Act
             var custoEnvio = await freteService.CalcularCustoEnvio(frete);
